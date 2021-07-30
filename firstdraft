@@ -1,6 +1,6 @@
 from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
 from azure.cognitiveservices.speech.audio import AudioOutputConfig
-speech_config = SpeechConfig(subscription="48355b44a4884c6a986b44fe28c06c91", region="eastus")
+speech_config = SpeechConfig(subscription=" ", region=" ")
 audio_config = AudioOutputConfig(filename="/Users/ashrafharhash/Downloads/Untitled.wav")
 synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
 synthesizer.speak_text_async("A simple test to write to a file.")
