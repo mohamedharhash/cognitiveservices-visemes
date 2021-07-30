@@ -1,0 +1,44 @@
+from azure.cognitiveservices.speech import AudioDataStream, SpeechConfig, SpeechSynthesizer, SpeechSynthesisOutputFormat
+from azure.cognitiveservices.speech.audio import AudioOutputConfig
+speech_config = SpeechConfig(subscription="48355b44a4884c6a986b44fe28c06c91", region="eastus")
+audio_config = AudioOutputConfig(filename="/Users/ashrafharhash/Downloads/Untitled.wav")
+synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+synthesizer.speak_text_async("A simple test to write to a file.")
+audio_config = AudioOutputConfig(use_default_speaker=True)
+
+synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
+result = synthesizer.speak_text_async("Getting the response as an in-memory stream.").get()
+stream = AudioDataStream(result)
+
+speech_config.set_speech_synthesis_output_format(SpeechSynthesisOutputFormat["Riff24Khz16BitMonoPcm"])
+synthesizer = SpeechSynthesizer(speech_config=speech_config, audio_config=None)
+
+result = synthesizer.speak_text_async("Customizing audio output format.").get()
+stream = AudioDataStream(result)
+stream.save_to_wav_file("/Users/ashrafharhash/Downloads/Untitled.wav")
+
+import azure.cognitiveservices.speech as speechsdk
+
+
+ import azure.cognitiveservices.speech as speechsdk
+# Synthesize spoken output
+ responseSsml = " \
+     <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='en-US'> \
+         <voice name='en-GB-Susan'> \
+             {} \
+             <break strength='weak'/> \
+             Time to end this lab! \
+         </voice> \
+     </speak>"
+ speak = speech_synthesizer.speak_ssml_async(responseSsml).get()
+ 
+ 
+ import azure.cognitiveservices.speech as speechsdk
+
+speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
+
+# Subscribes to viseme received event
+speech_synthesizer.viseme_received.connect(lambda evt: print(
+    "Viseme event received: audio offset: {}ms, viseme id: {}.".format(evt.audio_offset / 10000, evt.viseme_id)))
+
+result = speech_synthesizer.speak_ssml_async(responseSsml).get()
